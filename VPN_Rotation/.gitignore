@@ -1,0 +1,20 @@
+# VPN configs (contains server IPs — don't commit)
+config_pool/
+
+# Credentials
+pass.txt
+
+# Session logs
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db

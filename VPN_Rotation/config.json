@@ -1,0 +1,28 @@
+{
+  "comment": "VPN Rotation Configuration — edit values to customize behavior",
+
+  "vpn": {
+    "config_dir"     : "config_pool",
+    "pass_file"      : "pass.txt",
+    "ciphers"        : "AES-128-CBC:AES-256-GCM",
+    "vpn_port"       : 1194,
+    "connect_timeout": 20
+  },
+
+  "rotation": {
+    "interval"       : 300,
+    "max_configs"    : 40
+  },
+
+  "filter": {
+    "preferred_regions": ["Japan", "Korea", "Singapore", "Thailand", "Vietnam"],
+    "min_speed_mbps"   : 5,
+    "fallback_to_global": true,
+    "fallback_min_count": 10
+  },
+
+  "logging": {
+    "log_dir": "logs",
+    "verbose": false
+  }
+}
