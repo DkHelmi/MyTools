@@ -1,95 +1,97 @@
-# 🛡️ IP Rotator — Stealth VPN Rotation System
+# 🛡️ VPN Rotation — Ganti IP Otomatis Setiap Beberapa Menit
 
-Automatically rotate your public IP address every N minutes using free [VPNGate](https://www.vpngate.net) servers and OpenVPN.
+Tool ini secara otomatis mengganti IP publik kamu setiap N menit menggunakan server VPN gratis dari [VPNGate](https://www.vpngate.net) dan OpenVPN.
 
-> Built for privacy research, network testing, and educational purposes.
+> Dibuat untuk keperluan riset privasi, pengujian jaringan, dan edukasi.
 
 ---
 
-## ✨ Features
+## ✨ Apa Saja yang Bisa Tool Ini Lakukan?
 
-| Feature | Description |
+| Fitur | Penjelasan Singkat |
 |---|---|
-| 🔄 Auto Rotation | Rotates IP on a configurable interval (default: 5 min) |
-| 🧠 Smart Server Select | Background probe picks lowest-latency verified server |
-| 🌏 Region Filter | Prefer Asia-Pacific servers for lower ping |
-| 🚫 Kill Switch | Optional iptables rule — blocks traffic if VPN drops |
-| 📊 Session Stats | Tracks uptime, rotation count, and IPs used |
-| 📁 Session Logging | Saves each session log to `logs/` |
-| 🎨 Rich UI | Beautiful terminal display via `rich` library |
-| ⚙️ Config File | Fully configurable via `config.json` |
+| 🔄 Ganti IP Otomatis | IP diganti secara berkala sesuai interval yang kamu set (default: 5 menit) |
+| 🧠 Pilih Server Cerdas | Di background, tool ini ngecek server mana yang paling bisa dihubungi, baru dipilih |
+| 🌏 Filter Wilayah | Prioritaskan server Asia (Jepang, Korea, dll) buat ping lebih rendah |
+| 🚫 Kill Switch | Kalau VPN putus di tengah jalan, semua koneksi internet diblokir — IP asli tidak bocor |
+| 📊 Statistik Sesi | Pantau berapa kali sudah ganti, berapa sukses, dan IP apa saja yang pernah dipakai |
+| 📁 Log Sesi | Setiap sesi disimpan di folder `logs/` |
+| 🎨 Tampilan Terminal | UI terminal yang rapi menggunakan library `rich` |
+| ⚙️ Mudah Dikonfigurasi | Semua pengaturan cukup di satu file: `config.json` |
 
 ---
 
-## 📋 Requirements
+## 📋 Yang Perlu Disiapkan
 
-| Requirement | Notes |
+| Kebutuhan | Catatan |
 |---|---|
-| Linux (Debian/Ubuntu recommended) | iptables kill switch requires Linux |
-| Python 3.10+ | |
-| `openvpn` | `sudo apt install openvpn` |
-| `netcat` | `sudo apt install netcat-openbsd` |
-| `curl` | Usually pre-installed |
+| Linux (Debian/Ubuntu disarankan) | Kill switch butuh `iptables` yang ada di Linux |
+| Python 3.10 ke atas | |
+| `openvpn` | Install via: `sudo apt install openvpn` |
+| `netcat` | Install via: `sudo apt install netcat-openbsd` |
+| `curl` | Biasanya sudah terinstall |
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Cara Pakai (Cepat)
 
 ```bash
-# 1. Clone the repo
+# 1. Clone repo ini
 git clone https://github.com/YOUR_USERNAME/VPN_Rotation.git
 cd VPN_Rotation
 
-# 2. Create a virtual environment & install dependencies
+# 2. Buat virtual environment & install dependensi
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# 3. Run (fetch fresh configs + start rotating)
+# 3. Jalankan (ambil server baru + mulai rotasi)
 bash runner.sh
 ```
 
 ---
 
-## 🛠️ Usage
+## 🛠️ Opsi Perintah
 
-### Basic
+### Lewat `runner.sh` (cara termudah)
 
 ```bash
-bash runner.sh                  # fetch configs + start rotating
-bash runner.sh --kill-switch    # enable iptables kill switch
-bash runner.sh --no-fetch       # use existing configs (no re-fetch)
+bash runner.sh                  # ambil server baru + mulai rotasi
+bash runner.sh --kill-switch    # aktifkan kill switch (blokir traffic kalau VPN putus)
+bash runner.sh --no-fetch       # pakai server yang sudah ada, tidak perlu ambil ulang
 ```
 
-### Advanced (direct Python)
+### Langsung lewat Python (lebih fleksibel)
 
 ```bash
 python3 rotator.py --help
 
-Options:
-  --config PATH       Path to config.json (default: config.json)
-  --interval SECONDS  Override rotation interval
-  --kill-switch       Enable iptables kill switch
-  --fetch             Fetch fresh VPN configs before starting
-  --verbose, -v       Enable debug logging
+Opsi:
+  --config PATH       Lokasi file config.json (default: config.json)
+  --interval DETIK    Ganti interval rotasi tanpa ubah config
+  --kill-switch       Aktifkan kill switch iptables
+  --fetch             Ambil server VPN baru sebelum mulai
+  --verbose, -v       Tampilkan log detail (untuk debugging)
 ```
 
-### Examples
+### Contoh Penggunaan
 
 ```bash
-# Rotate every 10 minutes with kill switch
+# Ganti IP setiap 10 menit + aktifkan kill switch
 python3 rotator.py --interval 600 --kill-switch
 
-# Use a custom config file
+# Pakai file config custom
 python3 rotator.py --config my_config.json
 
-# Fetch new servers + rotate + verbose logging
+# Ambil server baru + mulai dengan log detail
 python3 rotator.py --fetch --verbose
 ```
 
 ---
 
-## ⚙️ Configuration (`config.json`)
+## ⚙️ Pengaturan (`config.json`)
+
+Semua pengaturan ada di sini — tidak perlu edit kode sama sekali.
 
 ```json
 {
@@ -98,10 +100,10 @@ python3 rotator.py --fetch --verbose
     "pass_file"      : "pass.txt",
     "ciphers"        : "AES-128-CBC:AES-256-GCM",
     "vpn_port"       : 1194,
-    "connect_timeout": 45
+    "connect_timeout": 20
   },
   "rotation": {
-    "interval"  : 300,
+    "interval"   : 300,
     "max_configs": 40
   },
   "filter": {
@@ -116,53 +118,61 @@ python3 rotator.py --fetch --verbose
 }
 ```
 
+| Parameter | Penjelasan |
+|---|---|
+| `interval` | Jeda antar pergantian IP (dalam detik). Default 300 = 5 menit |
+| `max_configs` | Maksimal berapa server yang diunduh |
+| `preferred_regions` | Negara yang diprioritaskan saat memilih server |
+| `min_speed_mbps` | Kecepatan minimum server yang boleh dipilih |
+| `connect_timeout` | Batas waktu mencoba koneksi ke satu server |
+
 ---
 
-## 📁 Project Structure
+## 📁 Struktur Folder
 
 ```
 VPN_rotation/
-├── rotator.py          # Core rotation engine
-├── fetch_pool.py       # Download & filter VPNGate configs
-├── config_loader.py    # Config helper
-├── runner.sh           # Convenience shell script
-├── config.json         # All settings
-├── pass.txt            # VPN credentials (gitignored!)
-├── requirements.txt
+├── rotator.py          # Engine utama — yang mengatur semua rotasi
+├── fetch_pool.py       # Ambil & filter server dari VPNGate
+├── config_loader.py    # Baca dan proses config.json
+├── runner.sh           # Script shell untuk kemudahan menjalankan
+├── config.json         # Semua pengaturan ada di sini
+├── pass.txt            # Kredensial VPN (sudah di-gitignore!)
+├── requirements.txt    # Daftar library Python yang dibutuhkan
 ├── .gitignore
-├── config_pool/        # Downloaded .ovpn files (gitignored)
-└── logs/               # Session logs (gitignored)
+├── config_pool/        # File .ovpn hasil download (di-gitignore)
+└── logs/               # Log tiap sesi (di-gitignore)
 ```
 
 ---
 
-## 🔐 Credentials (`pass.txt`)
+## 🔐 Kredensial VPN (`pass.txt`)
 
-VPNGate servers use a shared username/password:
+Server VPNGate menggunakan username dan password yang sama untuk semua orang:
 
 ```
 vpn
 vpn
 ```
 
-> ⚠️ `pass.txt` is listed in `.gitignore` — **never commit credentials to git.**
+> ⚠️ File `pass.txt` sudah masuk `.gitignore` — **jangan pernah commit file ini ke git.**
 
 ---
 
 ## ⚠️ Disclaimer
 
-This tool uses [VPNGate](https://www.vpngate.net), a free academic VPN project by University of Tsukuba.
-Use responsibly and in accordance with your local laws and the terms of service of any platform you access.
-The authors are not responsible for misuse.
+Tool ini menggunakan [VPNGate](https://www.vpngate.net), proyek VPN akademik gratis dari Universitas Tsukuba, Jepang.
+Gunakan secara bertanggung jawab dan sesuai hukum yang berlaku di wilayahmu.
+Penulis tidak bertanggung jawab atas penyalahgunaan tool ini.
 
 ---
 
-## 🤝 Contributing
+## 🤝 Kontribusi
 
-Pull requests are welcome! Please open an issue first to discuss major changes.
+Pull request sangat disambut! Kalau mau ubah sesuatu yang besar, buka issue dulu ya biar bisa didiskusikan.
 
 ---
 
-## 📄 License
+## 📄 Lisensi
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License — lihat [LICENSE](LICENSE) untuk detail lengkapnya.
