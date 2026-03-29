@@ -1,27 +1,27 @@
-# 🛡️ VPN Rotation — Ganti IP Otomatis Setiap Beberapa Menit
+# VPN Rotation
 
-Tool ini secara otomatis mengganti IP publik kamu setiap N menit menggunakan server VPN gratis dari [VPNGate](https://www.vpngate.net) dan OpenVPN.
+Tool ini secara otomatis mengganti IP publik kamu setiap 5 menit menggunakan server VPN gratis dari [VPNGate](https://www.vpngate.net) dan OpenVPN.
 
 > Dibuat untuk keperluan riset privasi, pengujian jaringan, dan edukasi.
 
 ---
 
-## ✨ Apa Saja yang Bisa Tool Ini Lakukan?
+## Apa Saja yang Bisa Tool Ini Lakukan?
 
 | Fitur | Penjelasan Singkat |
 |---|---|
-| 🔄 Ganti IP Otomatis | IP diganti secara berkala sesuai interval yang kamu set (default: 5 menit) |
-| 🧠 Pemilihan Server | Di background, tool ini ngecek server mana yang paling bisa dihubungi, baru dipilih |
-| 🌏 Filter Wilayah | Prioritaskan server Asia (Jepang, Korea, dll) buat ping lebih rendah |
-| 🚫 Kill Switch | Kalau VPN putus di tengah jalan, semua koneksi internet diblokir, IP asli tidak bocor |
-| 📊 Statistik Sesi | Pantau berapa kali sudah ganti, berapa sukses, dan IP apa saja yang pernah dipakai |
-| 📁 Log Sesi | Setiap sesi disimpan di folder `logs/` |
-| 🎨 Tampilan Terminal | UI terminal yang rapi menggunakan library `rich` |
-| ⚙️ Mudah Dikonfigurasi | Semua pengaturan cukup di satu file: `config.json` |
+| Ganti IP Otomatis | IP diganti secara berkala sesuai interval yang kamu set (default: 5 menit) |
+| Pemilihan Server | Di background, tool ini ngecek server mana yang paling bisa dihubungi, baru dipilih |
+| Filter Wilayah | Prioritaskan server Asia (Jepang, Korea, dll) buat ping lebih rendah |
+| Kill Switch | Kalau VPN putus di tengah jalan, semua koneksi internet diblokir, IP asli tidak bocor |
+| Statistik Sesi | Pantau berapa kali sudah ganti, berapa sukses, dan IP apa saja yang pernah dipakai |
+| Log Sesi | Setiap sesi disimpan di folder `logs/` |
+| Tampilan Terminal | UI terminal yang rapi menggunakan library `rich` |
+| Mudah Dikonfigurasi | Semua pengaturan cukup di satu file: `config.json` |
 
 ---
 
-## 📋 Yang Perlu Disiapkan
+## Yang Perlu Disiapkan
 
 | Kebutuhan | Catatan |
 |---|---|
@@ -33,7 +33,7 @@ Tool ini secara otomatis mengganti IP publik kamu setiap N menit menggunakan ser
 
 ---
 
-## 🚀 Cara Pakai 
+## Cara Pakai 
 
 ```bash
 # 1. Clone repo ini
@@ -65,7 +65,7 @@ python3 rotator.py --fetch --verbose
 
 ---
 
-## ⚙️ Pengaturan (`config.json`)
+## Pengaturan (`config.json`)
 
 Semua pengaturan ada di sini — tidak perlu edit kode sama sekali.
 
@@ -105,7 +105,7 @@ Semua pengaturan ada di sini — tidak perlu edit kode sama sekali.
 
 ---
 
-## 🔐 Kredensial VPN (`pass.txt`)
+## Kredensial VPN (`pass.txt`)
 
 Server VPNGate menggunakan username dan password yang sama untuk semua orang:
 
@@ -114,11 +114,11 @@ vpn
 vpn
 ```
 
-> ⚠️ File `pass.txt` sudah masuk `.gitignore` — **jangan pernah commit file ini ke git.**
+> File `pass.txt` sudah masuk `.gitignore` — **jangan pernah commit file ini ke git.**
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 Tool ini menggunakan [VPNGate](https://www.vpngate.net), proyek VPN akademik gratis dari Universitas Tsukuba, Jepang.
 Gunakan secara bertanggung jawab dan sesuai hukum yang berlaku di wilayahmu.
